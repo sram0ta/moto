@@ -77,8 +77,41 @@ function moto_scripts() {
 
     wp_enqueue_script( 'gsap-js', get_stylesheet_directory_uri() . '/src/js/vendor/gsap.min.js'  );
     wp_enqueue_script( 'gsap-scroll-trigger-js', get_stylesheet_directory_uri() . '/src/js/vendor/gsap-scroll-trigger.min.js'  );
+    wp_enqueue_script( 'gsap-split-js', get_stylesheet_directory_uri() . '/src/js/vendor/gsap-SplitText.js'  );
     wp_enqueue_script( 'swiper-js', get_stylesheet_directory_uri() . '/src/js/vendor/swiper-bundle.min.js'  );
+    wp_enqueue_script( 'fs-lightbox-js', get_stylesheet_directory_uri() . '/src/js/vendor/fslightbox.js'  );
 
     wp_enqueue_script( 'index-js', get_stylesheet_directory_uri() . '/src/index.js');
 }
 add_action( 'wp_enqueue_scripts', 'moto_scripts' );
+
+add_action("admin_menu", "remove_menus");
+function remove_menus() {
+    remove_menu_page("edit.php");                 # Записи
+    remove_menu_page("edit-comments.php");        # Комментарии
+}
+
+add_filter('wpcf7_autop_or_not', '__return_false');
+
+add_action('wp_ajax_get_course_data', 'get_course_data');
+add_action('wp_ajax_nopriv_get_course_data', 'get_course_data');
+
+// ajax курсы
+function get_course_data() {
+    $course_id = intval($_POST['course_id']);
+    if (!$course_id) {
+        wp_send_json_error(['message' => 'Неверный ID курса']);
+    }
+
+    $title = get_the_title($course_id);
+    $price = get_field('price', $course_id);
+    $time = get_field('time', $course_id);
+    $description = get_field('description_big', $course_id);
+
+    wp_send_json_success([
+        'title' => $title,
+        'price' => $price,
+        'time' => $time,
+        'description' => $description,
+    ]);
+}

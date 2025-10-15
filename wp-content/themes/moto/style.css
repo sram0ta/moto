@@ -190,4 +190,11 @@ p, h1, h2, h3, h4, h5, h6 {
     position: relative;
     margin: 0;
     padding: 0;
+    line-height: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
 }
