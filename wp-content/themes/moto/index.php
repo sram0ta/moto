@@ -238,8 +238,19 @@ get_header();
                                         <div class="courses__gallery__item__content">
                                             <h4 class="courses__gallery__item__content__title h4"><?php the_title(); ?></h4>
                                             <div class="courses__gallery__item__content__tag">
-                                                <div class="courses__gallery__item__content__tag__item p1 _druk"><?php the_field('price'); ?></div>
-                                                <div class="courses__gallery__item__content__tag__item p1 _druk"><?php the_field('time'); ?></div>
+                                                <?php
+                                                if (get_field('price')){
+                                                    ?>
+                                                    <div class="courses__gallery__item__content__tag__item p1 _druk"><?php the_field('price'); ?></div>
+                                                    <?php
+                                                }
+
+                                                if (get_field('time')){
+                                                    ?>
+                                                    <div class="courses__gallery__item__content__tag__item p1 _druk"><?php the_field('time'); ?></div>
+                                                    <?php
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                         <div class="courses__gallery__item__information">
@@ -400,7 +411,13 @@ get_header();
                 <div class="reviews__content__item">
                     <div class="reviews__content__item__title">
                         <div class="h4"><?php the_title(); ?></div>
-                        <img src="<?= get_field('image')['url']; ?>" alt="<?= get_field('image')['alt']; ?>" loading="lazy">
+                        <?php
+                        if (get_field('image')){
+                            ?>
+                                <img src="<?= get_field('image')['url']; ?>" alt="<?= get_field('image')['alt']; ?>" loading="lazy">
+                            <?php
+                        }
+                        ?>
                     </div>
                     <div class="reviews__content__item__description">
                         <p class="p1"><?php the_field('description'); ?></p>
@@ -454,8 +471,19 @@ get_header();
                                     <div class="courses__gallery__item__content">
                                         <h4 class="courses__gallery__item__content__title h4"><?php the_title(); ?></h4>
                                         <div class="courses__gallery__item__content__tag">
-                                            <div class="courses__gallery__item__content__tag__item p1 _druk"><?php the_field('price'); ?></div>
-                                            <div class="courses__gallery__item__content__tag__item p1 _druk"><?php the_field('time'); ?></div>
+                                            <?php
+                                            if (get_field('price')){
+                                                ?>
+                                                    <div class="courses__gallery__item__content__tag__item p1 _druk"><?php the_field('price'); ?></div>
+                                                <?php
+                                            }
+
+                                            if (get_field('time')){
+                                                ?>
+                                                <div class="courses__gallery__item__content__tag__item p1 _druk"><?php the_field('time'); ?></div>
+                                                <?php
+                                            }
+                                            ?>
                                         </div>
                                     </div>
                                     <div class="courses__gallery__item__information">

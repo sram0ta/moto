@@ -1033,6 +1033,10 @@
           align-items: flex-start;
           justify-content: space-between;
 
+          .h4{
+            max-width: 38.9rem;
+          }
+
           img{
             width: 6.6rem;
             height: 6.6rem;
@@ -1059,10 +1063,10 @@
           }
 
           .p1{
-            max-width: 17.4rem;
+            max-width: 30.4rem;
 
             @include mobile{
-              max-width: 11.55rem;
+              max-width: 100%;
             }
           }
 
@@ -1467,7 +1471,24 @@
     padding: 1.6rem;
     background-color: $c-g;
     border-radius: 0.2rem;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     z-index: 3;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &__inner{
+      overflow: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
 
     .popup__exit{
       display: none;

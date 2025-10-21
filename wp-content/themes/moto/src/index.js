@@ -153,10 +153,11 @@ const initAboutGallery = () => {
     const swImages  = makeFadeSwiper(root.querySelector('.about-gallery__images .swiper'), { allowTouchMove: true });
     const swNumber  = makeFadeSwiper(root.querySelector('.about-gallery__content__number .swiper'), { allowTouchMove: false });
     const swDesc    = makeFadeSwiper(root.querySelector('.about-gallery__content__information__description .swiper'), { allowTouchMove: false });
+    const swDescMobile    = makeFadeSwiper(root.querySelector('.about-gallery__content__number__description-mobile .swiper'), { allowTouchMove: false });
     const swCounter = makeFadeSwiper(root.querySelector('.about-gallery__content__information__image__counter .swiper'), { allowTouchMove: false });
     const swList    = makeFadeSwiper(root.querySelector('.about-gallery__content__information__image__list .swiper'), { allowTouchMove: true });
 
-    const slaves = [swNumber, swDesc, swCounter, swList].filter(Boolean);
+    const slaves = [swNumber, swDesc, swDescMobile, swCounter, swList].filter(Boolean);
     if (swImages) swImages.controller.control = slaves;
 
     slaves.forEach(s => { if (s) s.controller.control = null; });
@@ -188,28 +189,50 @@ const galleryCourses = () => {
         if (sliderEl.dataset.swiperInited === '1') return;
 
         const host = sliderEl.closest('.courses') || sliderEl.parentElement;
-        const nextEl = host.querySelector('._next');
-        const prevEl = host.querySelector('._prev');
+
+        const nextEls = Array.from(host.querySelectorAll('.navigation ._next'));
+        const prevEls = Array.from(host.querySelectorAll('.navigation ._prev'));
+
+        const hasNav = nextEls.length && prevEls.length;
 
         const swiper = new Swiper(sliderEl, {
             slidesPerView: 1,
-            spaceBetween: remToPx(0.5),
+            spaceBetween: remToPx ? remToPx(8 / 16) : 8,
             speed: 700,
             grabCursor: false,
 
             loop: true,
             watchOverflow: true,
 
-            navigation: { nextEl, prevEl },
+            ...(hasNav && {
+                navigation: {
+                    nextEl: nextEls,
+                    prevEl: prevEls,
+                    disabledClass: 'is-disabled',
+                    hiddenClass: 'is-hidden',
+                    lockClass: 'is-locked',
+                },
+            }),
 
             breakpoints: {
-                769:   { slidesPerView: 3, spaceBetween: remToPx(0.8) },
-                1367:  { slidesPerView: 3, spaceBetween: remToPx(1)   },
+                769:  { slidesPerView: 3, spaceBetween: remToPx ? remToPx(0.8) : 12 },
+                1367: { slidesPerView: 3, spaceBetween: remToPx ? remToPx(1)   : 16 },
             },
         });
 
         sliderEl.dataset.swiperInited = '1';
         sliderEl._swiper = swiper;
+
+        if (hasNav) {
+            nextEls.forEach(btn => btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                swiper.slideNext();
+            }));
+            prevEls.forEach(btn => btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                swiper.slidePrev();
+            }));
+        }
     });
 };
 

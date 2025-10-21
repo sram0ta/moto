@@ -24,7 +24,7 @@
 <?php wp_body_open(); ?>
 <header class="header grid-12">
     <a href="<?= home_url(); ?>" class="header__logo">
-        <img src="/wp-content/uploads/2025/10/RUS_MOTO.svg" alt="">
+        <img src="/wp-content/uploads/2025/10/cropped-IMG_5664.jpeg" alt="">
     </a>
     <nav class="header__navigation">
         <a href="#about" class="header__navigation__item p1 _druk">Об инструкторе</a>
